@@ -1,5 +1,8 @@
+//import our instructor model which is the struture into our controller
 const  Instructor = require("../models/instructorModel")
+ 
 
+// this here we create a instructor account 
 exports.createInstructor = async (req,res)=>{
     try{
         const instructor = new Instructor (req.body);
@@ -13,7 +16,7 @@ exports.createInstructor = async (req,res)=>{
     }
 };
 
-
+// we use this here to get all instructor we have in our database
 exports.getAllInstructor = async(req,res)=>{
     try{
         const instructor = await Instructor.find();
@@ -27,6 +30,8 @@ exports.getAllInstructor = async(req,res)=>{
     }
 };
 
+
+// here we are trying to get one instructor
 exports.getOneInstructor = async (req,res)=>{
     try{
         const instructor = await Instructor.findById(req.params.instructorId);
@@ -47,6 +52,7 @@ exports.getOneInstructor = async (req,res)=>{
     }
 };
 
+//here we try to update an instructor
 exports.updateOneInstructor = async (req,res) =>{
     try{
         const instructor = await Instructor.findByIdAndUpdate(req.params.instructorId,
@@ -71,6 +77,8 @@ exports.updateOneInstructor = async (req,res) =>{
         res.status(500).json({message: error.message});
         }
 };
+
+// here we try to delete one instructor
 exports.deleteOneInstructor = async (req,res)=>{
     try{
         const instructor = await Instructor.findById(req.params.instructorId);

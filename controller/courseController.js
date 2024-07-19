@@ -1,5 +1,8 @@
+//here we try to import our course from the course module which is the structure
 const  Course = require("../models/courseModel")
 
+
+//here we try to create a course
 exports.createCourse = async (req,res)=>{
     try{
         const course = new Course (req.body);
@@ -13,7 +16,7 @@ exports.createCourse = async (req,res)=>{
     }
 };
 
-
+//here we try to get a course
 exports.getCourse = async(req,res)=>{
     try{
         const course = await Course.find();
@@ -27,6 +30,7 @@ exports.getCourse = async(req,res)=>{
     }
 };
 
+// here we try to get one course 
 exports.getOneCourse = async (req,res)=>{
     try{
         const course = await Course.findById(req.params.courseId);
@@ -47,6 +51,7 @@ exports.getOneCourse = async (req,res)=>{
     }
 };
 
+// here we try to update one course 
 exports.updateOneCourse = async (req,res) =>{
     try{
         const course = await Course.findByIdAndUpdate(req.params.courseId,
@@ -71,6 +76,8 @@ exports.updateOneCourse = async (req,res) =>{
         res.status(500).json({message: error.message});
         }
 };
+
+//here we try to delete a course
 exports.deleteOneCourse = async (req,res)=>{
     try{
         const course = await Course.findById(req.params.courseId);

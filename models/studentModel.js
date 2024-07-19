@@ -11,17 +11,24 @@ const studentSchema = new Schema({
     type: String,
     required : true,
     } ,
-    other_name:{
+    username:{
         type: String,
         required : false,
         },
-        
+        role:{
+            type: String,
+            default: "student",
+        },
         email:{
             type: String,
             required:true,
             lowercase:true,         
         },
         phone:{
+            type: String,
+            required:true,
+        },
+        password:{
             type: String,
             required:true,
         },

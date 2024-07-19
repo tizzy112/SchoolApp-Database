@@ -1,11 +1,21 @@
 //import express inti our application the es5 way
 const express = require ("express");
+
+//importing our db from mongodb
 const db = require("./DBcon/conn");
+
+//importing all  our routes to our main js app 
 const studentRoute = require("./routes/studentRoute")
 const authRoute = require("./routes/authRoute");
-const Instructor = require("./models/instructorModel");
 const instructorRoute = require("./routes/instructorRoute")
 const courseRoute = require("./routes/courseRoute")
+
+
+//importing our middleware that verify token
+const {
+    verifyToken, isStudent, isInstructor
+} = require("./middleware/authMiddleware")
+
 
 const app = express();
 
@@ -28,23 +38,32 @@ const thankYou = (req,res,next) =>{
 
 
 // this execute for every route on this server
-
 app.use(welcomeMessage)
 
 
-//importing the student route
-app.use("/api/v1",authRoute)
-app.use("/api/v1/", courseRoute)
-app.use("/api/v1/", instructorRoute)
-app.use("/api/v1",studentRoute)
+//importing our diffrent route in our main js 
 
+//this is for our authRoute
+app.use("/api/v1",authRoute)
+
+//our routes that works for course
+app.use("/api/v1/", courseRoute)
+
+
+//our routes that work for the instructor login and instrutor routes and it verify the login token
+app.use("/api/v1/",verifyToken,isInstructor, instructorRoute)
+
+//our routes that work for the instructor login and instrutor routes and it verify the login token
+app.use("/api/v1",verifyToken,isStudent,studentRoute)
+
+//this was for every log into our app after logging
 app.use(thankYou)
 
 //connecting to our  database 
 db.on("error", (error)=>console.log(error));
 db.once("open",()=>console.log("Connected to Database"));
 
-
+ 
 
 //our port
 app.listen(PORT,() =>{
@@ -68,6 +87,3 @@ app.post("/about", (req,res)=>{
     console.log("God is good")
 })
     */
-
-
-app.use("/api/v1",studentRoute);
